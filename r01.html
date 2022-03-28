@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=2350, maximum-scale=1.0" name="viewport" />
+    <link href="./css/stylesright.css" rel="stylesheet" type="text/css" />
+    <link href="./css/styles.css" rel="stylesheet" type="text/css" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <script src="https://cdn1.ideacloud.com/shared-sim-assets/core_dev.js"></script>
+</head>
+
+<body>
+    <input id="anPageName" name="page" type="hidden" value="right01" />
+
+    <!-- animation player -->
+    <script src="./js/lottie.js"></script>
+
+    <div id="r01-btn1-pulse"></div>
+    <img class='plus-imgs' id='plus-img' src='images/add-cir.png' />
+    <button id="r01-btn1" onclick="sim.trigger()" class="dellmetrics-dataclick"
+        datametrics="{'btnname':'cta|residency|explore a digital transformation'}">
+        Explore A Digital Transformation
+    </button>
+
+    <div id="lottie"></div>
+
+    <!-- animation data -->
+    <script src="./js/anim01.js"></script>
+    <script src="./js/main.js"></script>
+    <script src="./js/audio.js"></script>
+
+    <audio id="audio1" autoplay="false">
+        <source src="./audio/vo_01.mp3">
+    </audio>
+
+    <script>
+        let anim = lottie.loadAnimation(params);
+        let stepCnt = 0;
+        const r01Btn = document.getElementById('r01-btn1');
+        const r01BtnPulse = document.getElementById('r01-btn1-pulse');
+        const plusImg = document.getElementById('plus-img');
+        const audio1 = document.getElementById('audio1');
+        const audioArray = [audio1];
+
+        // Play video sequences
+        function vid1() {
+            anim.playSegments([30, 1139], true)
+        }
+
+        // Show buttons after video is done playing
+        async function stepper() {
+            if (stepCnt === 0) {
+                startAnimation = false;
+                playAudio(audioArray, stepCnt);
+                vid1();
+                setTimeout(() => {
+                    r01Btn.style.visibility = 'visible';
+                    r01Btn.classList.add('scaleBtn');
+                    plusImg.style.visibility = 'visible';
+                    plusImg.classList.add('scaleBtn');
+                    setTimeout(() => {
+                        r01BtnPulse.style.visibility = 'visible';
+                    }, 600);
+                }, 36000); // Timer: end interaction 1
+                stepCnt = 1;
+            }
+        }
+
+        // Detect mouse after Start the Tour button is clicked or alternate event is detected
+        let startAnimation = true;
+        function mouseIn() {
+            document.removeEventListener("mouseover", mouseIn);
+            document.removeEventListener("focus", mouseIn);
+            if (startAnimation) {
+                startAnimation = false;
+                stepper();
+            }
+        }
+
+        // Events to listen to
+        document.addEventListener("click", mouseIn);
+        document.addEventListener("focus", mouseIn);
+        document.addEventListener("simStart", mouseIn);
+
+        // Execute a function when the user releases a key on the keyboard
+        document.addEventListener("keyup", function (event) {
+            // Number 13 is the "Enter" key on the keyboard
+            if (event.keyCode === 13) {
+                // Trigger the button element with a click
+                mouseIn();
+            }
+        });
+    </script>
+</body>
+
+</html>

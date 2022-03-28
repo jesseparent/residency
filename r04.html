@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=2350, maximum-scale=1.0" name="viewport" />
+    <link href="./css/stylesright.css" rel="stylesheet" type="text/css" />
+    <link href="./css/styles.css" rel="stylesheet" type="text/css" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+</head>
+
+<body>
+    <input id="anPageName" name="page" type="hidden" value="right01" />
+
+    <!-- animation player -->
+    <script src="./js/lottie.js"></script>
+
+    <div id="greenBreathing" onclick="stepper()" class="dellmetrics-dataclick"
+        datametrics="{'btnname':'cta|residency|virtualize organization'}"></div>
+    <img class='plus-imgs' id='green-plus-img' src='images/add-cir.png' />
+    <div id="greenBreathing2" onclick="stepper()" class="dellmetrics-dataclick"
+        datametrics="{'btnname':'cta|residency|kpis green'}"></div>
+
+    <div id="r04-btn1-pulse"></div>
+    <button id="r04-btn1" onclick="stepper()" class="dellmetrics-dataclick"
+        datametrics="{'btnname':'cta|residency|streamline communication'}">
+        Streamline Communication
+    </button>
+    <img class='plus-imgs' id='r04-plus-img' src='images/add-cir.png' />
+
+    <img class='plus-imgs' id='start-plus-img' src='images/add-cir.png' />
+
+    <div id="btnstart-pulse"></div>
+
+    <button id="btnstart" onclick="stepper()">
+        Continue
+    </button>
+
+    <div id="lottie"></div>
+
+    <!-- animation data -->
+    <script src="./js/anim04.js"></script>
+    <script src="./js/mainright.js"></script>
+    <script src="./js/audio.js"></script>
+
+    <audio id="audio9" autoplay="false">
+        <source src="./audio/vo_09.mp3">
+    </audio>
+    <audio id="audio10" autoplay="false">
+        <source src="./audio/vo_10.mp3">
+    </audio><audio id="audio11" autoplay="false">
+        <source src="./audio/vo_11.mp3">
+    </audio>
+
+    <script>
+        var anim = lottie.loadAnimation(params);
+        let stepCnt = 0;
+        const btnStart = document.getElementById('btnstart');
+        const btnStartPulse = document.getElementById('btnstart-pulse');
+        const greenBreathing = document.getElementById('greenBreathing');
+        const greenBreathing2 = document.getElementById('greenBreathing2');
+        const greenPlus = document.getElementById('green-plus-img');
+        const r04Btn1 = document.getElementById('r04-btn1');
+        const r04Btn1Pulse = document.getElementById('r04-btn1-pulse');
+        const plusImg = document.getElementById('r04-plus-img');
+        const startPlus = document.getElementById('start-plus-img');
+        const audio9 = document.getElementById('audio9');
+        const audio10 = document.getElementById('audio10');
+        const audio11 = document.getElementById('audio11');
+        const audioArray = [audio9, audio10, audio11];
+
+        function vid1() {
+            anim.playSegments([0, 600], true)
+        }
+
+        function vid2() {
+            anim.playSegments([601, 750], true)
+        }
+
+        function vid3() {
+            anim.playSegments([751, 1349], true)
+        }
+
+        // Show buttons after video is done playing
+        async function stepper() {
+            if (stepCnt === 0) {
+                try {
+                    await playAudio(audioArray, stepCnt);
+                    vid1();
+                    btnStart.style.visibility = 'hidden';
+                    btnStartPulse.style.visibility = 'hidden';
+                    startPlus.style.visibility = 'hidden';
+                    vid1();
+                    setTimeout(() => {
+                        greenBreathing.style.visibility = 'visible';
+                        greenPlus.classList.add('scaleBtn')
+                        greenPlus.style.visibility = 'visible';
+                        stepCnt = 1;
+                    }, 33000); // Timer: end interaction 1
+                } catch (err) {
+                    // Audio failed to play without interaction from user - Create interaction
+                    btnStart.style.visibility = 'visible';
+                    btnStart.classList.add('scaleBtn');
+                    startPlus.style.visibility = 'visible'
+                    startPlus.classList.add('scaleBtn');
+                    setTimeout(() => {
+                        btnStartPulse.style.visibility = 'visible';
+                    }, 600);
+                }
+            } else if (stepCnt === 1) {
+                playAudio(audioArray, stepCnt);
+                vid2();
+                greenBreathing.style.visibility = 'hidden';
+                greenPlus.classList.remove('scaleBtn')
+                greenPlus.style.visibility = 'hidden';
+                setTimeout(() => {
+                    greenBreathing2.style.visibility = 'visible';
+                    greenPlus.classList.add('scaleBtn')
+                    greenPlus.style.visibility = 'visible';
+                    stepCnt = 2;
+                }, 9000); // Timer: end interaction 2
+            } else if (stepCnt === 2) {
+                greenBreathing2.style.visibility = 'hidden';
+                greenPlus.style.visibility = 'hidden';
+                playAudio(audioArray, stepCnt);
+                vid3();
+                setTimeout(() => {
+                    r04Btn1.style.visibility = 'visible';
+                    r04Btn1.classList.add('scaleBtn');
+                    plusImg.style.visibility = 'visible'
+                    plusImg.classList.add('scaleBtn');
+                    setTimeout(() => {
+                        r04Btn1Pulse.style.visibility = 'visible';
+                        stepCnt = 3;
+                    }, 600);
+                }, 13000); // Timer: end interaction 3
+            } else {
+                trigger();
+            }
+        }
+
+        window.addEventListener('load', stepper())
+    </script>
+</body>
+
+</html>

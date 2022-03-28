@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=2350, maximum-scale=1.0" name="viewport" />
+    <link href="./css/stylesright.css" rel="stylesheet" type="text/css" />
+    <link href="./css/styles.css" rel="stylesheet" type="text/css" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+</head>
+
+<body>
+    <input id="anPageName" name="page" type="hidden" value="right01" />
+
+    <!-- animation player -->
+    <script src="./js/lottie.js"></script>
+
+    <div id="redBreathing" onclick="stepper()" class="dellmetrics-dataclick"
+        datametrics="{'btnname':'cta|residency|streamline communication and collaboration'}"></div>
+    <img class='plus-imgs' id='red-plus-img' src='images/add-cir.png' />
+    <div id="redBreathing2" onclick="stepper()"></div>
+
+    <div id="r05-btn1-pulse" class="dellmetrics-dataclick" datametrics="{'btnname':'cta|residency|kpis red'}"></div>
+    <form action="https://www.delltechnologies.com/en-us/forms/contact-us/modernized-services.htm" method="get"
+        target="_blank">
+        <input type="hidden" name="tfcid" value="37897234" />
+        <input type="hidden" name="cid" value="37893163607234" />
+        <input type="hidden" name="lid" value="5993986" />
+        <input type="hidden" name="dgc" value="em" />
+        <button type="submit" id="r05-btn1" class="dellmetrics-dataclick"
+            datametrics="{'btnname':'cta|residency|learn more'}">
+            Learn More
+        </button>
+    </form>
+    <img class='plus-imgs' id='r05-plus-img' src='images/add-cir.png' />
+
+    <img class='plus-imgs' id='start-plus-img' src='images/add-cir.png' />
+
+    <div id="btnstart-pulse"></div>
+
+    <button id="btnstart" onclick="stepper()">
+        Continue
+    </button>
+
+    <div id="lottie"></div>
+
+    <!-- animation data -->
+    <script src="./js/anim05.js"></script>
+    <script src="./js/mainright.js"></script>
+    <script src="./js/audio.js"></script>
+
+    </audio><audio id="audio12" autoplay="false">
+        <source src="./audio/vo_12.mp3">
+    </audio>
+    </audio><audio id="audio13" autoplay="false">
+        <source src="./audio/vo_13.mp3">
+    </audio>
+    </audio><audio id="audio14" autoplay="false">
+        <source src="./audio/vo_14.mp3">
+    </audio>
+
+    <script>
+        var anim = lottie.loadAnimation(params);
+        let stepCnt = 0;
+        const btnStart = document.getElementById('btnstart');
+        const btnStartPulse = document.getElementById('btnstart-pulse');
+        const redBreathing = document.getElementById('redBreathing');
+        const redBreathing2 = document.getElementById('redBreathing2');
+        const redPlus = document.getElementById('red-plus-img');
+        const r05Btn = document.getElementById('r05-btn1');
+        const r05BtnPulse = document.getElementById('r05-btn1-pulse');
+        const plusImg = document.getElementById('r05-plus-img');
+        const startPlus = document.getElementById('start-plus-img');
+        const audio12 = document.getElementById('audio12');
+        const audio13 = document.getElementById('audio13');
+        const audio14 = document.getElementById('audio14');
+        const audioArray = [audio12, audio13, audio14];
+
+        function vid1() {
+            anim.playSegments([0, 360], true);
+        }
+
+        function vid2() {
+            anim.playSegments([361, 510], true);
+        }
+
+        function vid3() {
+            anim.playSegments([511, 1379], true);
+        }
+
+        // Show buttons after video is done playing
+        async function stepper() {
+            if (stepCnt === 0) {
+                try {
+                    await playAudio(audioArray, stepCnt);
+                    vid1();
+                    btnStart.style.visibility = 'hidden';
+                    btnStartPulse.style.visibility = 'hidden';
+                    startPlus.style.visibility = 'hidden';
+                    vid1();
+                    setTimeout(() => {
+                        redBreathing.style.visibility = 'visible';
+                        redPlus.classList.add('scaleBtn')
+                        redPlus.style.visibility = 'visible';
+                        stepCnt = 1;
+                    }, 22000); // Timer: end interaction 1
+                } catch (err) {
+                    // Audio failed to play without interaction from user - Create interaction
+                    btnStart.style.visibility = 'visible';
+                    btnStart.classList.add('scaleBtn');
+                    startPlus.style.visibility = 'visible'
+                    startPlus.classList.add('scaleBtn');
+                    setTimeout(() => {
+                        btnStartPulse.style.visibility = 'visible';
+                    }, 600);
+                }
+            } else if (stepCnt === 1) {
+                playAudio(audioArray, stepCnt);
+                vid2();
+                redBreathing.style.visibility = 'hidden';
+                redPlus.classList.remove('scaleBtn')
+                redPlus.style.visibility = 'hidden';
+                setTimeout(() => {
+                    redBreathing2.style.visibility = 'visible';
+                    redPlus.classList.add('scaleBtn')
+                    redPlus.style.visibility = 'visible';
+                    stepCnt = 2;
+                }, 8000); // Timer: end interaction 2
+            } else if (stepCnt === 2) {
+                playAudio(audioArray, stepCnt);
+                vid3();
+                redBreathing2.style.visibility = 'hidden';
+                redPlus.style.visibility = 'hidden';
+                setTimeout(() => {
+                    r05Btn.style.visibility = 'visible';
+                    r05Btn.classList.add('scaleBtn');
+                    plusImg.style.visibility = 'visible'
+                    plusImg.classList.add('scaleBtn');
+                    setTimeout(() => {
+                        r05BtnPulse.style.visibility = 'visible';
+                        stepCnt = 2;
+                    }, 600);
+                }, 21500); // Timer: end interaction 3
+            }
+        }
+
+        window.addEventListener('load', stepper())
+    </script>
+</body>
+
+</html>
